@@ -2,8 +2,8 @@
 .vscode
 
 #Front-end
-dist
 node_modules
+dist
 
 # Other
 相关资料
