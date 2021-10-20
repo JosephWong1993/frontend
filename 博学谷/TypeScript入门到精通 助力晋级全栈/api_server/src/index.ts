@@ -3,12 +3,13 @@ import express from 'express';
 import cors from 'cors';
 
 import config = require("./config.json")
+import router = require('./routers/api')
 
 const app = express();
 
 app.use(async (req, res, next) => {
     console.log(`received ${req.method} : ${req.path}`);
-    await next();
+    next();
 })
 
 app.use(cors()) //处理跨域
@@ -22,7 +23,7 @@ app.use(express.static('./static'));    //静态资源文件处理
 //     res.send("hello world.\n");
 // });
 
-app.use('/api/', require('./routers/api'));
+app.use('/api/', router);
 
 app.listen(config.port, () => {
     console.log(`API Server is on ${config.port}...`);
