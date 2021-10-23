@@ -12,12 +12,15 @@ app.use(async (req, res, next) => {
     next();
 })
 
-app.use(cors()) //处理跨域
-app.use(express.json());    //处理json数据
+//处理跨域
+app.use(cors())
+//处理json数据
+app.use(express.json());
 app.use(express.urlencoded({
     extended: true
 }));
-app.use(express.static('./static'));    //静态资源文件处理
+//静态资源文件处理
+app.use(express.static('./static'));
 
 // app.get('/*', (req, res, next) => {
 //     res.send("hello world.\n");
