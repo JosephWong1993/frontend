@@ -9,7 +9,7 @@ const app = express();
 
 app.use(async (req, res, next) => {
     console.log(`received ${req.method} : ${req.path}`);
-    next();
+    await next();
 })
 
 //处理跨域

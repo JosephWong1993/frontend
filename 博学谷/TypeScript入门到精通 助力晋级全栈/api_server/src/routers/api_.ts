@@ -20,57 +20,28 @@
  */
 
 import { Router } from 'express';
-import Item from '../models/item';
-import User from '../models/user';
-import Order from '../models/order';
 
 const router = Router();
 
 //  用户注册
 router.post('/users/register', (req, res, next) => {
-    console.log(req.body);
-    let user = new User(req.body.username, req.body.password);
-    if (user.save()) {
-        res.send({
-            code: 0
-        });
-    } else {
-        res.send({
-            code: 1
-        });
-    }
+    res.send("users.register");
 });
 
 //  用户登录
 router.post('/users/login', (req, res, next) => {
-    console.log(req.body);
-    let result = User.login(req.body.username, req.body.password);
-    if (result) {
-        res.send({
-            code: 0,
-            data: result
-        });
-    } else {
-        res.send({
-            code: -1,
-            msg: "wrong username or password"
-        });
-    }
+    res.send("users.login");
 });
 
 //  商品列表
 router.get('/items/list', (req, res, next) => {
-    //res.send("items.list");
-    res.send({
-        code: 0,
-        data: Item.getList()
-    });
+    res.send("items.list");
 });
 
 //  商品详情
-// router.get('/items/:id', (req, res, next) => {
-//     res.send("items.one");
-// });
+router.get('/items/:id', (req, res, next) => {
+    res.send("items.one");
+});
 
 //  创建订单
 router.post('/orders/create', (req, res, next) => {
