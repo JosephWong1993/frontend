@@ -74,22 +74,56 @@ router.get('/items/list', (req, res, next) => {
 
 //  创建订单
 router.post('/orders/create', (req, res, next) => {
-    res.send("orders.create");
+    // res.send("orders.create");
+    let order = new Order(req.body.items, req.body.user);
+    let result = order.save();
+    res.send({
+        code: 0,
+        data: result
+    })
 });
 
 //  订单列表
 router.get('/orders/list', (req, res, next) => {
-    res.send("orders.list");
+    // res.send("orders.list");
+    res.send({
+        code: 0,
+        data: Order.getList()
+    });
 });
 
 //  订单详情
 router.get('/orders/:id', (req, res, next) => {
-    res.send("orders.one");
+    // res.send("orders.one");
+    let order = Order.getById(Number.parseInt(req.params.id));
+    if (order) {
+        res.send({
+            code: 0,
+            data: order
+        });
+    } else {
+        res.send({
+            code: -1,
+            msg: "订单不存在"
+        });
+    }
 });
 
 //  修改订单状态
 router.post('/orders/:id/change_status', (req, res, next) => {
-    res.send("orders.one.status");
+    // res.send("orders.one.status");
+    let order = Order.changeStatus(Number.parseInt(req.params.id), req.body.status);
+    if (order) {
+        res.send({
+            code: 0,
+            data: order
+        });
+    } else {
+        res.send({
+            code: -1,
+            msg: "订单不存在"
+        });
+    }
 });
 
 export = router;
