@@ -31,7 +31,7 @@ class Order {
             create_time: this.create_time
         };
         rows.push(order);
-        return true;
+        return order;
     }
 
     static getList() {

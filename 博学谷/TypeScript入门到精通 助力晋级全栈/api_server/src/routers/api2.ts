@@ -69,7 +69,7 @@ router.get('/items/list', async (req, res, next) => {
 // });
 
 //  创建订单
-router.post('/orders/create', (req, res, next) => {
+router.post('/orders/create', async (req, res, next) => {
     // res.send("orders.create");
     let order = new Order(req.body);
     order.order_no = '' + Date.now();
@@ -77,7 +77,7 @@ router.post('/orders/create', (req, res, next) => {
     order.items.forEach(i => order.amount += i.quantity * i.unit_price);
     console.log(order);
     try {
-        let result = order.save();
+        let result = await order.save();
         res.send({
             code: 0,
             data: result

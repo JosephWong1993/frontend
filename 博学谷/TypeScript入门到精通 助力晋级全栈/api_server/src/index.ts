@@ -1,10 +1,9 @@
 //API Server
 import express from 'express';
 import cors from 'cors';
-
-import config = require("./config.json")
-import router = require('./routers/api')
-
+import config = require("./config.json");
+import * as db from "./models2/index";
+db.init();
 const app = express();
 
 app.use(async (req, res, next) => {
@@ -26,7 +25,8 @@ app.use(express.static('./static'));
 //     res.send("hello world.\n");
 // });
 
-app.use('/api/', router);
+// app.use('/api/', require("./routers/api"));
+app.use('/api/', require("./routers/api2"));
 
 app.listen(config.port, () => {
     console.log(`API Server is on ${config.port}...`);
