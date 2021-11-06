@@ -17,34 +17,29 @@ const routes: Array<RouteConfig> = [
     children: [
       {
         path: '/item',
-        name: 'Item',
+        name: 'item',
         component: Item
       },
       {
         path: '/cart',
-        name: 'Cart',
+        name: 'cart',
         component: Cart
       },
       {
         path: '/order',
-        name: 'Order',
+        name: 'order',
         component: Order
       }
     ]
   },
   {
     path: '/login',
-    name: 'Login',
+    name: 'login',
     component: Login
   },
   {
     path: '/register',
-    name: 'Register',
-    component: Register
-  },
-  {
-    path: '/register',
-    name: 'Register',
+    name: 'register',
     component: Register
   }
 ]

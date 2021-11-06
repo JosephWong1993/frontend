@@ -1,9 +1,0 @@
-{
-    "port": 33000,
-    "mongodbUrl": "mongodb://10.0.108.15:27017/order_sys",
-    "mongodbOptions": {
-        "useNewUrlParser": true,
-        "useUnifiedTopology": true,
-        "poolSize": 5
-    }
-}
