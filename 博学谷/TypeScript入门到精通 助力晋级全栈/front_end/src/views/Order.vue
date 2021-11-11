@@ -21,14 +21,14 @@
           label="订单状态"
           width="120">
         <template slot-scope="scope">
-          <span>{{ scope.row.status }}</span>
+          <span>{{ statusMap[scope.row.status] }}</span>
         </template>
       </el-table-column>
       <el-table-column
           label="订单金额"
           width="120">
         <template slot-scope="scope">
-          <span>{{ scope.row.amount }}</span>
+          <span>{{ (scope.row.amount / 100).toFixed(2) }}</span>
         </template>
       </el-table-column>
       <el-table-column
@@ -50,11 +50,47 @@
           </el-button>
           <el-button
               size="mini"
-              @click="handleDelete(scope.$index, scope.row)">设为已完成
+              @click="changeStatus(scope.$index, scope.row)">设为已完成
           </el-button>
         </template>
       </el-table-column>
     </el-table>
+
+    <!--  订单详情  -->
+    <el-dialog title="订单详情" :visible.sync="dialogTableVisible">
+      <div>
+        <span>订单编号 {{ currentOrder.order_no }}</span>
+        <el-divider direction="vertical"></el-divider>
+        <span>总金额 {{ (currentOrder.amount / 100).toFixed(2) }}</span>
+        <el-divider direction="vertical"></el-divider>
+        <span>状态 {{ statusMap[currentOrder.status] }}</span>
+        <el-divider direction="vertical"></el-divider>
+        <span>创建时间 {{ currentOrder.created_at }}</span>
+      </div>
+      <el-divider>商品列表</el-divider>
+      <el-table :data="gridData">
+        <el-table-column label="名称" width="150">
+          <template slot-scope="scope">
+            <span>{{ scope.row.item.name }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="商品" width="200">
+          <template slot-scope="scope">
+            <el-image style="width: 100px;height: 100px;" :src="scope.row.item.pic"></el-image>
+          </template>
+        </el-table-column>
+        <el-table-column label="单价">
+          <template slot-scope="scope">
+            <span>{{ (scope.row.unit_price / 100).toFixed(2) }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column label="数量">
+          <template slot-scope="scope">
+            <span>{{ scope.row.quantity }}{{ scope.row.item.unit }}</span>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-dialog>
   </div>
 </template>
 
@@ -115,6 +151,25 @@ export default class App extends Vue {
       message: '已加入您的购物车',
       type: 'success'
     });
+  }
+
+  statusMap = {
+    "handling": "未处理",
+    "completed": "已完成"
+  }
+
+  dialogTableVisible = false;
+  currentOrder = {};
+  gridData: any[] = [];
+
+  showDetail(index: number, row: any): void {
+    this.gridData = this.orderList[index].items;
+    this.currentOrder = this.orderList[index];
+    this.dialogTableVisible = true;
+  }
+
+  changeStatus(index: number, row: any) :void{
+    // TODO：修改订单状态
   }
 }
 </script>
