@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 axios.defaults.headers = {
-    'X-Request-With': XMLHttpRequest',
+    'X-Request-With': 'XMLHttpRequest',
     'Content-Type': 'application/json'
 };
 
@@ -18,11 +18,11 @@ export default class {
     }
 
     static async register(username: string, password: string) {
-        return axios.get('/users/register', {username: username, password: password});
+        return axios.post('/users/register', {username: username, password: password});
     }
 
     static async login(username: string, password: string) {
-        return axios.get('/user/login', {username: username, password: password});
+        return axios.post('/user/login', {username: username, password: password});
     }
 
     static async createOrder(order: any) {
