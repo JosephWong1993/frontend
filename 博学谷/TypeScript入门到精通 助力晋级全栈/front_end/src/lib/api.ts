@@ -6,7 +6,7 @@ axios.defaults.headers = {
     'Content-Type': 'application/json'
 };
 
-axios.defaults.baseURL = "http://localhost:33000.api/";
+axios.defaults.baseURL = "http://localhost:33000/api/";
 // 请求超时的时间限制
 axios.defaults.timeout = 2000;
 
@@ -22,7 +22,7 @@ export default class {
     }
 
     static async login(username: string, password: string) {
-        return axios.post('/user/login', {username: username, password: password});
+        return axios.post('/users/login', {username: username, password: password});
     }
 
     static async createOrder(order: any) {
