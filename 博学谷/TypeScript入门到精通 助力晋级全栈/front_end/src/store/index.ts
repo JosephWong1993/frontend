@@ -3,7 +3,21 @@ import Vuex from 'vuex'
 import VuePersistence from 'vuex-persist'
 
 const vuexLocal = new VuePersistence({
-    storage: window.localStorage
+    // storage: window.localStorage
+    saveState: ((key, state, storage) => {
+        const all = {
+            user: (<any>state).user,
+            cart: Array.from((<any>state).cart || [])
+        };
+        window.localStorage.setItem(key, JSON.stringify(all));
+    }),
+    restoreState: ((key, storage) => {
+        const all = JSON.parse(<string>window.localStorage.getItem(key || "{}")) || {};
+        return {
+            user: all.user || null,
+            cart: new Map(all.cart)
+        };
+    })
 });
 Vue.use(Vuex)
 
@@ -24,7 +38,7 @@ export default new Vuex.Store({
                 item.quantity = 1;
                 state.cart.set(item._id, item);
             } else {
-                state.cart.get(item._id).quantity += 1;
+                (<any>state.cart.get(item._id)).quantity += 1;
             }
         },
         removeFormCart(state, id) {

@@ -11,7 +11,7 @@ axios.defaults.baseURL = "http://localhost:33000/api/";
 axios.defaults.timeout = 2000;
 
 export default class {
-    static HOST = "http://localhost:3000/";
+    static HOST = "http://localhost:33000";
 
     static async getItems() {
         return axios.get('/items/list');

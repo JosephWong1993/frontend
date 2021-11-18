@@ -3,6 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import config = require("./config.json");
 import * as db from "./models2/index";
+import * as path from "path";
+
 db.init();
 const app = express();
 
@@ -19,7 +21,7 @@ app.use(express.urlencoded({
     extended: true
 }));
 //静态资源文件处理
-app.use(express.static('./static'));
+app.use(express.static(path.join(__dirname, 'static')));
 
 // app.get('/*', (req, res, next) => {
 //     res.send("hello world.\n");
