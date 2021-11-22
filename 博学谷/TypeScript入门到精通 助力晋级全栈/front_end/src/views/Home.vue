@@ -50,7 +50,7 @@ export default class App extends Vue {
   activeIndex = "item";
 
   created() {
-    if (this.$route.name != null) {
+    if (this.$route.name) {
       this.activeIndex = this.$route.name;
     }
   }

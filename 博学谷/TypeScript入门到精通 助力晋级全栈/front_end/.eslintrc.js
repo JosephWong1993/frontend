@@ -13,6 +13,13 @@ module.exports = {
   },
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    '@typescript-eslint/no-this-alias':[
+      "error",
+      {
+        "allowDestructuring": true, // Allow `const { props, state } = this`; false by default
+        "allowedNames": ["_self"] // Allow `const vm= this`; `[]` by default
+      }
+    ]
   }
 }
