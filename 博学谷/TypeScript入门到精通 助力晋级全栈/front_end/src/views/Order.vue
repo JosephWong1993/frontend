@@ -1,7 +1,6 @@
 <template>
   <div class="about">
     <h1>订单列表</h1>
-
     <el-table
         :data="orderList"
         style="width: 100%">
@@ -14,7 +13,7 @@
           label="商品信息"
           width="180">
         <template slot-scope="scope">
-          <el-image style="width: 100px;height: 100px;" :src="scope.row.items[0].item.pic"></el-image>
+          <el-image style="width: 100px;height: 100px;" :src="host+scope.row.items[0].item.pic"></el-image>
         </template>
       </el-table-column>
       <el-table-column
@@ -39,7 +38,7 @@
       <el-table-column
           label="创建时间">
         <template slot-scope="scope">
-          <span>{{ scope.row.created_at }}</span>
+          <span>{{ $moment(scope.row.created_at).format('YYYY-MM-DD HH:mm:ss') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作">
@@ -50,6 +49,7 @@
           </el-button>
           <el-button
               size="mini"
+              v-if="role==='admin'"
               @click="changeStatus(scope.$index, scope.row)">设为已完成
           </el-button>
         </template>
@@ -65,7 +65,7 @@
         <el-divider direction="vertical"></el-divider>
         <span>状态 {{ statusMap[currentOrder.status] }}</span>
         <el-divider direction="vertical"></el-divider>
-        <span>创建时间 {{ currentOrder.created_at }}</span>
+        <span>创建时间 {{ $moment(currentOrder.created_at).format('YYYY-MM-DD HH:mm:ss') }}</span>
       </div>
       <el-divider>商品列表</el-divider>
       <el-table :data="gridData">
@@ -76,7 +76,7 @@
         </el-table-column>
         <el-table-column label="商品" width="200">
           <template slot-scope="scope">
-            <el-image style="width: 100px;height: 100px;" :src="scope.row.item.pic"></el-image>
+            <el-image style="width: 100px;height: 100px;" :src="host+scope.row.item.pic"></el-image>
           </template>
         </el-table-column>
         <el-table-column label="单价">
@@ -96,54 +96,13 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import Component from 'vue-class-component'
+import Component from 'vue-class-component';
+import API from '../lib/api';
 
 @Component
 export default class App extends Vue {
-  orderList = [
-    {
-      order_no: "11111111",
-      items: [
-        {
-          item: {
-            name: '美味的汉堡',
-            unit: '个',
-            pic: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'
-          },
-          quantity: 10,
-          unit_price: 1000
-        }
-      ],
-      user: {
-        _id: "111",
-        username: "Jack"
-      },
-      amount: 200000,
-      status: 'handling',
-      created_at: '2020-01-01 18:30:00'
-    },
-    {
-      order_no: "11111111",
-      items: [
-        {
-          item: {
-            name: '美味的汉堡',
-            unit: '个',
-            pic: 'https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png'
-          },
-          quantity: 10,
-          unit_price: 1000
-        }
-      ],
-      user: {
-        _id: "111",
-        username: "Tom"
-      },
-      amount: 200000,
-      status: 'completed',
-      created_at: '2020-01-01 18:30:00'
-    },
-  ]
+  orderList: any[] = [];
+  host = API.HOST;
 
   addToCart(index: number): void {
     console.log(index);
@@ -162,14 +121,35 @@ export default class App extends Vue {
   currentOrder = {};
   gridData: any[] = [];
 
+  role = "customer";
+
+  async created() {
+    this.role = this.$store.state.user.role;
+    let userid = this.$store.state.user ? this.$store.state.user._id : null;
+    let result = await API.getOrders(this.role === 'customer' ? userid : null);
+    console.log(result);
+    if (result && result.data.code === 0) {
+      this.orderList = result.data.data;
+    }
+  }
+
   showDetail(index: number, row: any): void {
     this.gridData = this.orderList[index].items;
     this.currentOrder = this.orderList[index];
     this.dialogTableVisible = true;
   }
 
-  changeStatus(index: number, row: any) :void{
-    // TODO：修改订单状态
+  async changeStatus(index: number, row: any) {
+    let orderid = this.orderList[index]._id;
+    let result = await API.changeOrderStatus(orderid, 'completed');
+    console.log(result);
+    if (result && result.data.code === 0) {
+      let userid = this.$store.state.user ? this.$store.state.user._id : null;
+      let result = await API.getOrders(this.role === 'customer' ? userid : null);
+      if (result && result.data.code === 0) {
+        this.orderList = result.data.data;
+      }
+    }
   }
 }
 </script>
