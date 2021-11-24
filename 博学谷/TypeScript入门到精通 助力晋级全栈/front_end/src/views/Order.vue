@@ -140,8 +140,8 @@ export default class App extends Vue {
   }
 
   async changeStatus(index: number, row: any) {
-    let orderid = this.orderList[index]._id;
-    let result = await API.changeOrderStatus(orderid, 'completed');
+    let orderId = this.orderList[index]._id;
+    let result = await API.changeOrderStatus(orderId, 'completed');
     console.log(result);
     if (result && result.data.code === 0) {
       let userid = this.$store.state.user ? this.$store.state.user._id : null;
