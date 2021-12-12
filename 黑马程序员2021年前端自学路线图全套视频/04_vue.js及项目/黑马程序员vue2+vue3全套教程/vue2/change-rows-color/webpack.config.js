@@ -33,5 +33,16 @@ module.exports = {
         host: "127.0.0.1",
         // 实时打包所使用的端口号
         port: 48080,
+    },
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    "style-loader",
+                    "css-loader"
+                ]
+            }
+        ]
     }
 }
