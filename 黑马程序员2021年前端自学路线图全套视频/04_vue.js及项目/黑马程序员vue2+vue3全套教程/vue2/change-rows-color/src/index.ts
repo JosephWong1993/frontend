@@ -2,6 +2,7 @@
 import $ from 'jquery';
 // 导入样式
 import './css/index.css'
+import './css/index.less';
 
 // 2.定义jQuery的入口函数
 $(function () {

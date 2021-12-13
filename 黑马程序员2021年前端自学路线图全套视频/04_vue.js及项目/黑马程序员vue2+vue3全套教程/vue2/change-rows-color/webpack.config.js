@@ -35,14 +35,23 @@ module.exports = {
         port: 48080,
     },
     module: {
+        //所有第三方文件模块的匹配规则
         rules: [
             {
                 test: /\.css$/,
                 use: [
                     "style-loader",
-                    "css-loader"
-                ]
-            }
+                    "css-loader",
+                ],
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    "style-loader",
+                    "css-loader",
+                    "less-loader",
+                ],
+            },
         ]
     }
 }
