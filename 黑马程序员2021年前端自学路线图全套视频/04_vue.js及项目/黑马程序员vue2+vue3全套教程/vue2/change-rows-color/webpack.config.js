@@ -52,6 +52,10 @@ module.exports = {
                     "less-loader",
                 ],
             },
+            {
+                test: /\.jpg|png|gif$/,
+                use: "url-loader"
+            },
         ]
     }
 }
