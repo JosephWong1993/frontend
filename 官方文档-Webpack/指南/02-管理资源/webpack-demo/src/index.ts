@@ -4,21 +4,21 @@ import Icon from "./icon.jpg";
 import Data from "./data.xml";
 
 function component() {
-    var elememnt = document.createElement("div");
+    const element = document.createElement("div");
 
     //  Lodash, 现在由此脚本导入
-    elememnt.innerHTML = _.join(["Hello", "webpack"], " ");
-    elememnt.classList.add("hello");
+    element.innerHTML = _.join(["Hello", "webpack"], " ");
+    element.classList.add("hello");
 
     //  将此图像添加到我们现有的div
-    var myIcon = new Image();
+    const myIcon = new Image();
     myIcon.src = Icon;
 
-    elememnt.appendChild(myIcon);
+    element.appendChild(myIcon);
 
     console.log(Data);
 
-    return elememnt;
+    return element;
 }
 
 document.body.appendChild(component());
