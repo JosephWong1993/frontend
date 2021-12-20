@@ -62,5 +62,10 @@ module.exports = {
                 exclude: /node_modules/
             }
         ]
+    },
+    resolve: {
+        alias: {
+            '@': path.join(__dirname, './src/'),
+        }
     }
 }

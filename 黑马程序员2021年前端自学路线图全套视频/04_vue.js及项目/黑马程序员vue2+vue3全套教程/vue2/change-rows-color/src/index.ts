@@ -4,6 +4,8 @@ import $ from 'jquery';
 import './css/index.css'
 import './css/index.less';
 
+import './ts/test/info';
+
 // 导入图片，得到图片文件
 import logo from "./images/logo.jpg";
 
