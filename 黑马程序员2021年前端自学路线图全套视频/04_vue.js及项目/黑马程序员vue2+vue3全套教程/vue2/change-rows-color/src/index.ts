@@ -17,3 +17,16 @@ $(function () {
     $('li:odd').css('background-color', 'red');
     $('li:even').css('background-color', 'pink');
 });
+
+
+function info(target: any): void {
+    target.info = 'Person info.';
+}
+
+// 定义一个普通的类
+@info
+class Person {
+    public static info: any;
+}
+
+console.log(Person.info);

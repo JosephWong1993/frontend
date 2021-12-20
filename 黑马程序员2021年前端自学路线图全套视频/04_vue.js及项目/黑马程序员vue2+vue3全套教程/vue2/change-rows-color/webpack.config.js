@@ -54,8 +54,13 @@ module.exports = {
             },
             {
                 test: /\.jpg|png|gif$/,
-                use: "url-loader"
+                use: "url-loader?limit=470"
             },
+            {
+                test: /\.js$/,
+                use: 'babel-loader',
+                exclude: /node_modules/
+            }
         ]
     }
 }
