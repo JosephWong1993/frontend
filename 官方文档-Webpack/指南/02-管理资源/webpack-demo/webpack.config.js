@@ -1,48 +1,34 @@
 const path = require('path');
+const toml = require('toml');
+const yaml = require('yamljs');
+const json5 = require('json5');
 
 module.exports = {
-    entry: "./src/index.js",
-    output: {
-        filename: 'bundle.js',
-        path: path.resolve(__dirname, "dist"),
-    },
-    module: {
-        rules: [
-            {
-                //  加载CSS
-                test: /\.css$/,
-                use: [
-                    "style-loader",
-                    "css-loader",
-                ],
+    entry: "./src/index.js", output: {
+        filename: 'bundle.js', path: path.resolve(__dirname, "dist"),
+    }, module: {
+        rules: [{
+            test: /\.css$/i, use: ["style-loader", "css-loader"]
+        }, {
+            test: /\.(png|svg|jpg|gif)$/i, type: "asset/resource"
+        }, {
+            test: /\.(woff|woff2|eot|ttf|otf)$/i, type: "asset/resource"
+        }, {
+            test: /\.(csv|tsv)$/i, use: ["csv-loader"]
+        }, {
+            test: /\.xml$/i, use: ["xml-loader",]
+        }, {
+            test: /\.toml$/i, type: 'json', parser: {
+                parse: toml.parse,
             },
-            {
-                //  加载图片
-                test: /\.(png|svg|jpg|gif)$/,
-                use: [
-                    "file-loader",
-                ],
+        }, {
+            test: /\.yaml$/i, type: 'json', parser: {
+                parse: yaml.parse,
             },
-            {
-                //  加载字体
-                test: /\.(woff|woff2|eot|ttf|otf)$/,
-                use: [
-                    "file-loader"
-                ]
+        }, {
+            test: /\.json5$/i, type: 'json', parser: {
+                parse: json5.parse,
             },
-            //  加载数据
-            {
-                test: /\.(csv|tsv)$/,
-                use: [
-                    "csv-loader"
-                ]
-            },
-            {
-                test: /\.xml$/,
-                use: [
-                    "xml-loader",
-                ]
-            },
-        ]
+        },]
     }
 }

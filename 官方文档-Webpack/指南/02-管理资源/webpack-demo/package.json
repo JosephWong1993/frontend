@@ -4,7 +4,6 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "webpack"
   },
   "keywords": [],
@@ -13,12 +12,15 @@
   "devDependencies": {
     "@types/lodash": "^4.14.178",
     "css-loader": "^6.5.1",
-    "csv-loader": "^3.0.2",
+    "csv-loader": "^3.0.3",
     "file-loader": "^3.0.1",
+    "json5": "^2.2.0",
     "style-loader": "^3.3.1",
+    "toml": "^3.0.0",
     "webpack": "^5.65.0",
     "webpack-cli": "^4.9.1",
-    "xml-loader": "^1.2.1"
+    "xml-loader": "^1.2.1",
+    "yamljs": "^0.3.0"
   },
   "dependencies": {
     "lodash": "^4.17.11"

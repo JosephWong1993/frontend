@@ -1,12 +1,13 @@
 /* 引入字体 */
-/* @font-face{
+@font-face {
     font-family: "MyFont";
-    src:url("./my-font.ttf") format("ttf");
+    src: url("./FZGuoMeiJinDaoTi.TTF") format("ttf");
     font-weight: 600;
     font-style: normal;
-} */
+}
 
-.hello{
-    color:red;
+.hello {
+    color: red;
+    font-family: 'MyFont', serif;
     background: url("./icon.jpg");
 }
