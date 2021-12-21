@@ -5,7 +5,6 @@ module.exports = {
     mode: "development",
     entry: {
         app: "./src/index.js",
-        print: './src/print.js',
     },
     devtool: "inline-source-map",
     devServer: {
@@ -32,6 +31,16 @@ module.exports = {
         clean: true
     },
     optimization: {
+        moduleIds: 'deterministic',
         runtimeChunk: 'single',
+        splitChunks: {
+            cacheGroups: {
+                vendor: {
+                    test: /[\\/]node_modules[\\/]/,
+                    name: 'vendors',
+                    chunks: 'all',
+                },
+            },
+        },
     },
 }
