@@ -1,12 +1,14 @@
 // import "babel-polyfill";
 
 function component() {
-    var element = document.crseateElement('div');
+    const element = document.createElement('div');
 
+    // @ts-ignore
     element.innerHTML = join(['Hello', 'webpack'], ' ');
 
     //  Assume we are in the context of "window"
-    this.alert("Hmmm, tthis probaly isn\'t a great iead...");
+    // @ts-ignore
+    this.alert("Hmmm, this probably isn't a great idea...");
 
     return element;
 }
