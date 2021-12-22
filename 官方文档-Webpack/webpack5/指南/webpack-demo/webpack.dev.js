@@ -4,8 +4,8 @@ const path = require("path");
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = merge(common, {
-    mode: 'development',
-    devtool: 'inline-source-map',
+    mode: "development",
+    devtool: 'eval-cheap-module-source-map',
     devServer: {
         static: './dist',
         hot: true,

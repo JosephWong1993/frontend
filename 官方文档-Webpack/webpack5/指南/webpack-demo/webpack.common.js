@@ -11,20 +11,6 @@ module.exports = {
         assetModuleFilename: "static/[name][contenthash][ext]",
         clean: true,
     },
-    optimization: {
-        moduleIds: 'deterministic',
-        runtimeChunk: 'single',
-        splitChunks: {
-            chunks: 'all',
-            cacheGroups: {
-                vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all',
-                },
-            },
-        },
-    },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'webpack-demo',
