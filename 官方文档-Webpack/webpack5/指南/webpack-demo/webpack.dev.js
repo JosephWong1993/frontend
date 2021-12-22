@@ -9,6 +9,8 @@ module.exports = merge(common, {
     devServer: {
         static: './dist',
         hot: true,
+        host: "127.0.0.1",
+        port: 40080,
     },
     plugins: [
         new ForkTsCheckerWebpackPlugin(),
