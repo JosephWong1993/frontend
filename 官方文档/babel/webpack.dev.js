@@ -20,13 +20,15 @@ module.exports = merge(common, {
             {
                 test: /\.tsx?$/i,
                 include: path.resolve(__dirname, 'src'),
-                use: [{
-                    loader: "ts-loader",
-                    options: {
-                        transpileOnly: true,
-                        appendTsSuffixTo: [/\.vue$/i],
-                    },
-                }],
+                use: [
+                    {
+                        loader: "ts-loader",
+                        options: {
+                            transpileOnly: true,
+                            appendTsSuffixTo: [/\.vue$/i],
+                        },
+                    }
+                ],
             },
             {
                 test: /\.css$/i,

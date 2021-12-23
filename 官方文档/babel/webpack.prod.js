@@ -37,8 +37,7 @@ module.exports = merge(common, {
             {
                 test: /\.tsx?$/i,
                 include: path.resolve(__dirname, 'src'),
-                loader: "ts-loader",
-                options: {appendTsSuffixTo: [/\.vue$/i]},
+                use: "babel-loader",
             },
             {
                 test: /\.css$/i,

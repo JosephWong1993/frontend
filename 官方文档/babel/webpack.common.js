@@ -24,7 +24,6 @@ module.exports = {
     },
     module: {
         rules: [
-
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 include: path.resolve(__dirname, 'src'),
@@ -50,7 +49,7 @@ module.exports = {
             },
             {
                 test: /\.vue$/i,
-                loader: 'vue-loader'
+                use: "vue-loader"
             },
         ],
     },
