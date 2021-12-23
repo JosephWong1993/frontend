@@ -4,22 +4,23 @@ const {VueLoaderPlugin} = require('vue-loader');
 
 module.exports = {
     entry: {
-        app: './src/index.ts',
+        app: './src/main.ts',
     },
     output: {
         filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist'),
-        assetModuleFilename: "static/[name][contenthash][ext]",
+        assetModuleFilename: "asset/[name][contenthash][ext]",
         clean: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: "webpack-demo",
+            title: "vue-loader",
+            template: "index.html",
         }),
         new VueLoaderPlugin(),
     ],
     resolve: {
-        extensions: [".ts", ".tsx", ".js", ".jsx"],
+        extensions: [".vue", ".ts", ".tsx", ".js", ".jsx"],
     },
     module: {
         rules: [
