@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const {VueLoaderPlugin} = require('vue-loader');
 
 module.exports = {
     entry: {
@@ -13,11 +14,12 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'webpack-demo',
+            title: "webpack-demo",
         }),
+        new VueLoaderPlugin(),
     ],
     resolve: {
-        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+        extensions: [".ts", ".tsx", ".js", ".jsx"],
     },
     module: {
         rules: [
@@ -44,6 +46,10 @@ module.exports = {
                 test: /\.xml$/i,
                 include: path.resolve(__dirname, 'src'),
                 use: ['xml-loader'],
+            },
+            {
+                test: /\.vue$/i,
+                loader: 'vue-loader'
             },
         ],
     },
