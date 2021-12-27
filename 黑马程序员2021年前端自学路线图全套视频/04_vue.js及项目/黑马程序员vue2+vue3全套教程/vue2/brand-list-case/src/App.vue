@@ -50,7 +50,7 @@
                         <label class="custom-control-label" :for="'cb' + item.id" v-else>已禁用</label>
                     </div>
                 </td>
-                <td>{{ item.time }}</td>
+                <td>{{ item.time | dataFormat }}</td>
                 <td>
                     <a href="javascript:" @click="remove(item.id)">删除</a>
                 </td>
