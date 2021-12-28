@@ -40,7 +40,7 @@ export default Vue.extend({
     },
     methods: {
         // 监听到了全选的状态变化
-        fullChange(e) {
+        fullChange(e: any) {
             this.$emit('full-change', e.target.checked)
         }
     }

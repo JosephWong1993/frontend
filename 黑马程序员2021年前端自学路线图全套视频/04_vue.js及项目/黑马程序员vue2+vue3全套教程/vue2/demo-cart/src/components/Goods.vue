@@ -20,7 +20,7 @@
                 <!-- 商品价格 -->
                 <span class="goods-price">￥{{ price }}</span>
                 <!-- 商品的数量 -->
-                <Counter :num="count" :id="id"></Counter>
+                <slot></slot>
             </div>
         </div>
     </div>
@@ -28,12 +28,8 @@
 
 <script lang="ts">
 import Vue from "vue";
-import Counter from '@/components/Counter.vue'
 
 export default Vue.extend({
-    components: {
-        Counter
-    },
     props: {
         // 商品的 id
         // 为啥在这里要封装一个 id 属性呢？
@@ -62,21 +58,16 @@ export default Vue.extend({
         state: {
             default: true,
             type: Boolean
-        },
-        // 商品的购买数量
-        count: {
-            type: Number,
-            default: 1
         }
     },
     methods: {
         // 只要复选框的选中状态发生了变化，就会调用这个处理函数
-        stateChange(e) {
+        stateChange(e:any) {
             const newState = e.target.checked
             // 触发自定义事件
             this.$emit('state-change', {id: this.id, value: newState})
         }
-    },
+    }
 });
 </script>
 

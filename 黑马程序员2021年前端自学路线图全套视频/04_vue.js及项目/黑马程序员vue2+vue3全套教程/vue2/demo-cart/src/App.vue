@@ -11,9 +11,10 @@
                 :pic="item.goods_img"
                 :price="item.goods_price"
                 :state="item.goods_state"
-                :count="item.goods_count"
                 @state-change="getNewState"
-        ></Goods>
+        >
+            <Counter :num="item.goods_count" @num-change="getNewNum(item, $event)"></Counter>
+        </Goods>
 
         <!-- Footer 区域 -->
         <Footer :isFull="fullState" :amount="amt" :all="total" @full-change="getFullState"></Footer>
@@ -29,28 +30,24 @@ import Header from '@/components/Header.vue'
 import Goods from '@/components/Goods.vue'
 import Footer from '@/components/Footer.vue'
 
-import bus from '@/components/eventBus'
+// 导入 Counter 组件
+import Counter from "@/components/Counter.vue";
 
 export default Vue.extend({
-    components: {
-        Header,
-        Goods,
-        Footer
-    },
     data() {
         return {
             // 用来存储购物车的列表数据，默认为空数组
-            list: []
+            list: new Array<any>()
         }
     },
     // 计算属性
     computed: {
         // 动态计算出全选的状态是 true 还是 false
-        fullState() {
+        fullState(): boolean {
             return this.list.every(item => item.goods_state)
         },
         // 已勾选商品的总价格
-        amt() {
+        amt(): number {
             // 1. 先 filter 过滤
             // 2. 再 reduce 累加
             return this.list
@@ -58,22 +55,13 @@ export default Vue.extend({
                 .reduce((total, item) => (total += item.goods_price * item.goods_count), 0)
         },
         // 已勾选商品的总数量
-        total() {
+        total(): number {
             return this.list.filter(item => item.goods_state).reduce((t, item) => (t += item.goods_count), 0)
         }
     },
     created() {
         // 调用请求数据的方法
         this.initCartList()
-
-        bus.$on('share', val => {
-            this.list.some(item => {
-                if (item.id === val.id) {
-                    item.goods_count = val.value
-                    return true;
-                }
-            });
-        })
     },
     methods: {
         // 封装请求列表数据的方法
@@ -87,7 +75,7 @@ export default Vue.extend({
         },
         // 接收子组件传递过来的数据
         // e 的格式为 { id, value }
-        getNewState(e) {
+        getNewState(e: any) {
             this.list.some(item => {
                 if (item.id === e.id) {
                     item.goods_state = e.value
@@ -97,9 +85,20 @@ export default Vue.extend({
             })
         },
         // 接收 Footer 子组件传递过来的全选按钮的状态
-        getFullState(val) {
+        getFullState(val: boolean) {
             this.list.forEach(item => (item.goods_state = val))
+        },
+        // 获取 Counter 组件发过来的最新的数量值
+        getNewNum(item: any, e: number) {
+            // console.log(item, e)
+            item.goods_count = e
         }
+    },
+    components: {
+        Header,
+        Goods,
+        Footer,
+        Counter
     },
 });
 </script>
