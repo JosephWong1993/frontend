@@ -5,27 +5,18 @@ const {VueLoaderPlugin} = require('vue-loader');
 module.exports = {
     entry: {
         app: './src/main.ts',
-    },
-    output: {
+    }, output: {
         filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist'),
         assetModuleFilename: "asset/[name][contenthash][ext]",
         clean: true,
-    },
-    plugins: [
-        new HtmlWebpackPlugin({
-            title: "demo-cart",
-            template: "index.html",
-        }),
-        new VueLoaderPlugin(),
-    ],
-    resolve: {
-        extensions: [".ts", ".js",],
-        alias: {
+    }, plugins: [new HtmlWebpackPlugin({
+        title: "demo-cart", template: "index.html",
+    }), new VueLoaderPlugin(),], resolve: {
+        extensions: [".ts", ".js",], alias: {
             '@': path.join(__dirname, './src/'),
         },
-    },
-    module: {
+    }, module: {
         rules: [
 
             {
@@ -35,26 +26,14 @@ module.exports = {
                 generator: {
                     filename: "images/[name][contenthash][ext]"
                 },
-            },
-            {
-                test: /\.(woff|woff2|eot|ttf|otf)$/i,
-                include: path.resolve(__dirname, 'src'),
-                type: 'asset/resource',
-            },
-            {
-                test: /\.(csv|tsv)$/i,
-                include: path.resolve(__dirname, 'src'),
-                use: ['csv-loader'],
-            },
-            {
-                test: /\.xml$/i,
-                include: path.resolve(__dirname, 'src'),
-                use: ['xml-loader'],
-            },
-            {
-                test: /\.vue$/i,
-                loader: 'vue-loader'
-            },
-        ],
+            }, {
+                test: /\.(woff|woff2|eot|ttf|otf)$/i, include: path.resolve(__dirname, 'src'), type: 'asset/resource',
+            }, {
+                test: /\.(csv|tsv)$/i, include: path.resolve(__dirname, 'src'), use: ['csv-loader'],
+            }, {
+                test: /\.xml$/i, include: path.resolve(__dirname, 'src'), use: ['xml-loader'],
+            }, {
+                test: /\.vue$/i, use: ["vue-loader"]
+            },],
     },
 };

@@ -6,45 +6,28 @@ const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = merge(common, {
-    mode: "production",
-    devtool: "nosources-source-map",
-    optimization: {
-        moduleIds: 'deterministic',
-        runtimeChunk: 'single',
-        splitChunks: {
-            chunks: 'all',
-            cacheGroups: {
+    mode: "production", devtool: "nosources-source-map", optimization: {
+        moduleIds: 'deterministic', runtimeChunk: 'single', splitChunks: {
+            chunks: 'all', cacheGroups: {
                 vendor: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: 'vendors',
-                    chunks: 'all',
+                    test: /[\\/]node_modules[\\/]/, name: 'vendors', chunks: 'all',
                 },
             },
-        },
-        minimize: true,
-        minimizer: [
-            new CssMinimizerPlugin(),
-            new TerserPlugin(),
-        ],
-    },
-    plugins: [
-        new MiniCssExtractPlugin({
-            filename: "[name].[contenthash].css",
-        }),
-    ],
-    module: {
-        rules: [
-            {
-                test: /\.tsx?$/i,
-                include: path.resolve(__dirname, 'src'),
-                loader: "ts-loader",
-                options: {appendTsSuffixTo: [/\.vue$/i]},
-            },
-            {
-                test: /\.css$/i,
-                include: path.resolve(__dirname, 'src'),
-                use: [MiniCssExtractPlugin.loader, 'css-loader'],
-            },
-        ]
+        }, minimize: true, minimizer: [new CssMinimizerPlugin(), new TerserPlugin(),],
+    }, plugins: [new MiniCssExtractPlugin({
+        filename: "[name].[contenthash].css",
+    }),], module: {
+        rules: [{
+            test: /\.tsx?$/i,
+            include: path.resolve(__dirname, 'src'),
+            loader: "ts-loader",
+            options: {appendTsSuffixTo: [/\.vue$/i]},
+        }, {
+            test: /\.css$/i, include: path.resolve(__dirname, 'src'), use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        }, {
+            test: /\.less$/i,
+            include: path.resolve(__dirname, 'src'),
+            use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
+        },]
     }
 });
