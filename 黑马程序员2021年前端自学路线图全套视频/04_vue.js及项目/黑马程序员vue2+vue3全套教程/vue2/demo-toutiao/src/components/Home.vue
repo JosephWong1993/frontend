@@ -40,7 +40,7 @@ export default Vue.extend({
             // 每页显示多少条数据
             limit: 10,
             // 文章的数组
-            artlist: [],
+            artlist: [] as any[],
             // 是否正在加载下一页数据，如果 loading 为 true，则不会反复触发 load 事件
             // 每当下一页数据请求回来之后，千万要记得，把 loading 从 true 改为 false
             loading: true,

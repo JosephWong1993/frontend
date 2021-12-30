@@ -26,7 +26,7 @@ module.exports = merge(common, {
             test: /\.css$/i, include: path.resolve(__dirname, 'src'), use: [MiniCssExtractPlugin.loader, 'css-loader'],
         }, {
             test: /\.less$/i,
-            include: path.resolve(__dirname, 'src'),
+            include: [path.resolve(__dirname, 'src'), path.resolve(__dirname, "node_modules/_vant@2.12.37@vant/lib/index.less"),],
             use: [MiniCssExtractPlugin.loader, "css-loader", "less-loader"],
         },]
     }
