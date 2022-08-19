@@ -13,6 +13,7 @@ nvm (Linux、Unix、OS X)
 
 nvm-windows (Windows)
   + https://github.com/coreybutler/nvm-windows
+
   + 常用命令：
     - nvm version
     - nvm install latest
@@ -20,3 +21,8 @@ nvm-windows (Windows)
     - nvm uninstall 版本号
     - nvm list
     - nvm use 版本号
+    
++ 配置阿里镜像源
+
+  node_mirror: https://npm.taobao.org/mirrors/node/
+  npm_mirror: https://npm.taobao.org/mirrors/npm/
