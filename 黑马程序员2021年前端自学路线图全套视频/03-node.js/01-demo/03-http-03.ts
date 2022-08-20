@@ -46,6 +46,24 @@ http.createServer(function (req, res) {
             //把读取到的index.html中的内容直接发送给浏览器
             res.end(data);
         });
+    } else if (req.url === '/images/index.png') {
+        // 表示用户要请求images下的index.png图片
+        fs.readFile(path.join(__dirname, 'images', 'index.png'), function (err, data) {
+            if (err) {
+                throw err;
+            }
+            res.setHeader('Content-Type', 'image/png');
+            res.end(data);
+        });
+    } else if (req.url === '/css/index.css') {
+        // 表示用户要请求images下的index.png图片
+        fs.readFile(path.join(__dirname, 'css', 'index.css'), function (err, data) {
+            if (err) {
+                throw err;
+            }
+            res.setHeader('Content-Type', 'text/css');
+            res.end(data);
+        });
     } else {
         fs.readFile(path.join(__dirname, 'htmls', '404.html'), function (err, data) {
             if (err) {
