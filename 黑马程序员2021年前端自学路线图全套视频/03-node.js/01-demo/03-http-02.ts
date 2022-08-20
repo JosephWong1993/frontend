@@ -16,14 +16,14 @@ http.createServer(function (req, res) {
         // res.write('hello index');
         // res.end();
         res.end('Hello Index');
-    }else if (req.url==='login'){
+    } else if (req.url === 'login') {
         res.end('Hello login');
-    }else if(req.url==='/list'){
+    } else if (req.url === '/list') {
         res.end('Hello List');
-    }else if(req.url==='/register'){
+    } else if (req.url === '/register') {
         res.end('Hello Register');
-    }else{
-        res.end('404，not Found。客户端错误！')
+    } else {
+        res.end('404，not Found。客户端错误！');
     }
 }).listen(8080, function () {
     console.log('http://localhost:8080');
