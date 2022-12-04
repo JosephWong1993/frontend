@@ -24,5 +24,5 @@ nvm-windows (Windows)
     
 + 配置阿里镜像源
 
-  node_mirror: https://npm.taobao.org/mirrors/node/
-  npm_mirror: https://npm.taobao.org/mirrors/npm/
+  nvm node_mirror: https://npm.taobao.org/mirrors/node/
+  nvm npm_mirror: https://npm.taobao.org/mirrors/npm/
