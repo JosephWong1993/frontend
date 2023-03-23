@@ -58,7 +58,7 @@ http.createServer(function (req, res) {
         // 既然是 get 提交数据，所有通过 req.url 就可以直接获取这些数据，但是这样使用起来不方便（得自己去截取字符串，然后获取想要的数据）
         // 通过 url 模块，可以将用户 get 提交的数据解析成一个 json 对象，使用起来很方便
         // console.log(req.url);
-        res.end('over');
+        // res.end('over');
 
         // 1 获取用户 get 提交过来的新闻数据
         // urlObj.query.title;
@@ -76,9 +76,15 @@ http.createServer(function (req, res) {
             }
 
             console.log('ok');
-        });
 
-        // 3 跳转到新闻列表页
+            // 设置响应报文头，通过响应报文头告诉浏览器，执行一次页面跳转操作
+            // 3 跳转到新闻列表页
+            // 重定向
+            res.statusCode = 302;
+            res.statusMessage = 'Found';
+            res.setHeader('Location', '/');
+            res.end();
+        });
     } else if (req.url === '/add' && req.method === 'post') {
         // 表示 post 方法提交一条新闻
     } else if (req.url.startsWith('/resources') && req.method === 'get') {
