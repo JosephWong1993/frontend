@@ -3,6 +3,7 @@
 // 封装一个 render() 函数
 // 将 render 函数挂载到 res 对象上，可以通过 res.render() 来访问
 // 实现 get 方式添加新闻
+// 实现在原来list数组的基础上追加新闻，而不是覆盖
 
 // 1 加载 http 模块
 import http from 'http';
@@ -65,25 +66,36 @@ http.createServer(function (req, res) {
         // urlObj.query.url;
         // urlObj.query.text;
 
-        // 2 把用户提交的新闻数据保存到 data.json 文件中
-        const list = [];
-        list.push(urlObj.query);
-
-        // 把 list 数组中的数据写入到 data.json 文件中
-        fs.writeFile(path.join(__dirname, 'data', 'data.json'), JSON.stringify(list), function (err) {
-            if (err) {
+        // 1.1 读取data.json文件中的数据，并将读取到的数据转换为一个数组
+        // 此处，读取文件的时候可以直接写一个utf8编码，这样的话，回调函数中的data就是一个字符串了
+        fs.readFile(path.join(__dirname, 'data', 'data.json'), 'utf-8', function (err, data) {
+            // 因为第一次访问网站，data.json文件本身就不存在，所以肯定是有错误的，
+            // 但是这种错误，我们并不认为是网站出错了，所以不需要抛出异常
+            if (err && err.code !== 'ENOENT') {
                 throw err;
             }
+            // 如果读取到数据了，那么就把读取到的数据data，转换为list数组
+            // 如果没有读取到数据，那么就把'[]'转换为数组
+            const list = JSON.parse(data || '[]');
+            list.push(urlObj.query);
 
-            console.log('ok');
+            // 2 把用户提交的新闻数据保存到 data.json 文件中
+            // 把 list 数组中的数据写入到 data.json 文件中
+            fs.writeFile(path.join(__dirname, 'data', 'data.json'), JSON.stringify(list), function (err) {
+                if (err) {
+                    throw err;
+                }
 
-            // 设置响应报文头，通过响应报文头告诉浏览器，执行一次页面跳转操作
-            // 3 跳转到新闻列表页
-            // 重定向
-            res.statusCode = 302;
-            res.statusMessage = 'Found';
-            res.setHeader('Location', '/');
-            res.end();
+                console.log('ok');
+
+                // 设置响应报文头，通过响应报文头告诉浏览器，执行一次页面跳转操作
+                // 3 跳转到新闻列表页
+                // 重定向
+                res.statusCode = 302;
+                res.statusMessage = 'Found';
+                res.setHeader('Location', '/');
+                res.end();
+            });
         });
     } else if (req.url === '/add' && req.method === 'post') {
         // 表示 post 方法提交一条新闻
