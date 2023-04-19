@@ -14,16 +14,27 @@ import path from 'path';
 import mime from 'mime';
 import url from 'url';
 import * as querystring from "querystring";
+import _ from 'underscore';
 
 // 2 创建服务
 http.createServer(function (req, res) {
     // 为 res 对象添加一个 render() 函数，方便后续使用
-    res.render = function (filename: string) {
+    // 因为现在渲染的 index.html 中需要用到模板数据，所以给 render 函数增加了第二个参数
+    // 第二个参数的作用就是用来传递 html 页面中要使用的模板数据
+    res.render = function (filename: string, tplData) {
         fs.readFile(filename, function (err, data) {
             if (err) {
                 res.writeHead(404, 'Not Found', {'Content-Type': 'text/html;charset=utf-8'});
                 res.end(data);
                 return;
+            }
+
+            // 如果用户传递了模板数据，那么就使用 underscore 的 template 方法进行替换
+            // 如果用户没有传递模板数据，那么就不进行替换
+            if (tplData) {
+                // 如果用户传递了模板数据，表示要进行模板替换
+                const fn = _.template(data.toString('utf-8'));
+                data = fn(tplData);
             }
             res.setHeader('Content-Type', mime.getType(filename));
             res.end(data);
@@ -41,18 +52,15 @@ http.createServer(function (req, res) {
     if ((req.url === '/' || req.url === '/index') && req.method === 'get') {
         // 1. 读取 data.json 文件中的数据，并将读取到的数据转换为 list 数组
         fs.readFile(path.join(__dirname, 'data', 'data.json'), 'utf-8', function (err, data) {
-            // 因为第一次访问网站，data.json文件本身就不存在，所以肯定是有错误的，
-            // 但是这种错误，我们并不认为是网站出错了，所以不需要抛出异常
             if (err && err.code !== 'ENOENT') {
                 throw err;
             }
-            // 如果读取到数据了，那么就把读取到的数据data，转换为list数组
-            // 如果没有读取到数据，那么就把'[]'转换为数组
-            const list = JSON.parse(data || '[]');
+            // 读取到的新闻数据
+            const list_news = JSON.parse(data || '[]');
 
             // 2. 在服务器端使用模板引擎，将 list 中的数据和 index.html 文件中的内容结合，渲染给客户端
             // 读取 index.html 并返回
-            res.render(path.join(__dirname, 'views', 'index.html'));
+            res.render(path.join(__dirname, 'views', 'index.html'), {list: list_news});
         });
     } else if (req.url === '/submit' && req.method === 'get') {
         // 读取 submit.html 并返回

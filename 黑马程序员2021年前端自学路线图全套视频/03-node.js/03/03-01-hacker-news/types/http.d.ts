@@ -1,5 +1,5 @@
 declare module 'http' {
     interface ServerResponse {
-        render: (filename: string) => void;
+        render: (filename: string, tplData?) => void;
     }
 }
