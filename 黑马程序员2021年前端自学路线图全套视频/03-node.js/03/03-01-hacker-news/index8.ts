@@ -113,16 +113,8 @@ http.createServer(function (req, res) {
             });
         });
     } else if (req.url === '/add' && req.method === 'post') {
-        // 表示 post 方法提交一条新闻
-        // 1.读取data.json文件中的数据
-        readNewsData((list) => {
-            // 2.获取用户post提交的数据
-            // 因为post提交数据的时候，数据量可能比较大，所以会分多次进行提交
-            // 此时要想在服务器中获取用户提交的所有数据，就必须监听request事件的data事件（因为每次浏览器提交一部分数据到服务器就会触发一次data事件）
-            // 那么，什么时候才表示浏览器把所有数据都提交到服务器了呢？就是当request对象的end事件被触发的时候。
-
-            // 监听request的对象的data事件和end事件代码如下
-            // 声明一个数组，用来保存用户每次提交过来的数据
+        // 读取data.json
+        readNewsData(function (list) {
             const array = [];
             req.on("data", function (chunk) {
                 // 此处的chunk参数，就是浏览器本次提交过来的一部分数据
@@ -151,16 +143,7 @@ http.createServer(function (req, res) {
 
                 list.push(postBody);
 
-                // 将新的 list 数组，写入到 data.json 文件中
-                fs.writeFile(path.join(__dirname, 'data', 'data.json'), JSON.stringify(list), function (err) {
-                    if (err) {
-                        throw err;
-                    }
-
-                    console.log('ok');
-
-                    // 设置响应报文头，通过响应报文头告诉浏览器，执行一次页面跳转操作
-                    // 3 跳转到新闻列表页
+                writeNewsData(JSON.stringify(list), () => {
                     // 重定向
                     res.statusCode = 302;
                     res.statusMessage = 'Found';
@@ -168,6 +151,19 @@ http.createServer(function (req, res) {
                     res.end();
                 });
             })
+        })
+
+        // 表示 post 方法提交一条新闻
+        // 1.读取data.json文件中的数据
+        readNewsData((list) => {
+            // 2.获取用户post提交的数据
+            // 因为post提交数据的时候，数据量可能比较大，所以会分多次进行提交
+            // 此时要想在服务器中获取用户提交的所有数据，就必须监听request事件的data事件（因为每次浏览器提交一部分数据到服务器就会触发一次data事件）
+            // 那么，什么时候才表示浏览器把所有数据都提交到服务器了呢？就是当request对象的end事件被触发的时候。
+
+            // 监听request的对象的data事件和end事件代码如下
+            // 声明一个数组，用来保存用户每次提交过来的数据
+
         });
     } else if (req.url.startsWith('/resources') && req.method === 'get') {
         // 如果用户请求是以 /resources 开头，并且是 get 请求，就认为用户是要请求静态资源
@@ -192,5 +188,17 @@ function readNewsData(callback: (list: any) => void) {
 
         // 通过调用回调函数 callback() 将读取到的数据 list 传递出去
         callback(list);
+    });
+}
+
+// 封装一个写入data.json文件的函数
+function writeNewsData(data: string, callback: () => void) {
+    fs.writeFile(path.join(__dirname, 'data', 'data.json'), data, function (err) {
+        if (err) {
+            throw err;
+        }
+
+        // 调用callback()来执行当写入数据完毕后的操作
+        callback();
     });
 }
