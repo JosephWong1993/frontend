@@ -83,8 +83,7 @@ http.createServer(function (req, res) {
             res.statusCode = 302;
             res.statusMessage = 'Found';
             res.setHeader('Location', '/');
-            res.end();
-        });
+            res.end();        });
     } else if (req.url === '/add' && req.method === 'post') {
         // 表示 post 方法提交一条新闻
     } else if (req.url.startsWith('/resources') && req.method === 'get') {
