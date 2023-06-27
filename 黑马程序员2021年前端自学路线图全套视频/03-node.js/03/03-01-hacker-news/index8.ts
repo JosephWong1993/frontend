@@ -113,36 +113,15 @@ http.createServer(function (req, res) {
             });
         });
     } else if (req.url === '/add' && req.method === 'post') {
-        // 读取data.json
+        // 1.读取data.json
         readNewsData(function (list) {
-            const array = [];
-            req.on("data", function (chunk) {
-                // 此处的chunk参数，就是浏览器本次提交过来的一部分数据
-                // chunk的数据类型时Buffer(chunk就是一个Buffer对象)
-                array.push(chunk);
-            });
+            // 2.读取用户post提交的数据
+            postBodyData(req, function (postData) {
+                // 3.将用户提交的新闻增加一个id属性，并且吧新闻push到list中
+                postData.id = list.length;
+                list.push(postData);
 
-            // 监听 request 对象的 end 事件
-            // 当 end 事件被触发的时候，表示所有数据都已经提交完毕了
-            req.on('end', function () {
-                // 在这个事件中只要把 array 中的所有数据汇总起来就好了
-                // 把 array 中的每个 buffer 对象，集合起来转换为一个 buffer 对象
-                const postBodyBuffer = Buffer.concat(array);
-                // console.log(postBody);
-                // 把获取到的 buffer 对象转换为一个字符串
-                const postBodyStr = postBodyBuffer.toString('utf-8');
-                // 把 post 请求的查询字符串，转换为一个 json 对象
-                // title=abc&url=abcabc&text=abcabcabc
-                // {title:'abc',url:'abcabc',text:'abcabcabc'}
-                // JSON.parse()
-                const postBody = querystring.parse(postBodyStr);
-                console.log(postBody);
-
-                // 在把新闻添加到list之前，为新闻增加一个 id 属性
-                postBody.id = list.length;
-
-                list.push(postBody);
-
+                // 4.将新的list数组，再写入到data.json文件中
                 writeNewsData(JSON.stringify(list), () => {
                     // 重定向
                     res.statusCode = 302;
@@ -150,7 +129,7 @@ http.createServer(function (req, res) {
                     res.setHeader('Location', '/');
                     res.end();
                 });
-            })
+            });
         });
     } else if (req.url.startsWith('/resources') && req.method === 'get') {
         // 如果用户请求是以 /resources 开头，并且是 get 请求，就认为用户是要请求静态资源
@@ -187,5 +166,25 @@ function writeNewsData(data: string, callback: () => void) {
 
         // 调用callback()来执行当写入数据完毕后的操作
         callback();
+    });
+}
+
+// 封装一个获取用户post提交的数据的方法
+function postBodyData(req: http.IncomingMessage, callback: (arg0: querystring.ParsedUrlQuery) => void) {
+    const array = [];
+    req.on("data", function (chunk) {
+        array.push(chunk);
+    });
+
+    // 监听 request 对象的 end 事件
+    // 当 end 事件被触发的时候，表示所有数据都已经提交完毕了
+    req.on('end', function () {
+        const postBodyBuffer = Buffer.concat(array);
+        // 把获取到的 buffer 对象转换为一个字符串
+        const postBodyStr = postBodyBuffer.toString('utf-8');
+        // 把 post 请求的查询字符串，转换为一个 json 对象
+        const postBody = querystring.parse(postBodyStr);
+        // 把用户post提交过来的数据传递出去
+        callback(postBody);
     });
 }
