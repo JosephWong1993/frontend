@@ -86,25 +86,16 @@ http.createServer(function (req, res) {
             }
         });
     } else if (req.url.startsWith('/add') && req.method === 'get') {
-        // 此处，读取文件的时候可以直接写一个utf8编码，这样的话，回调函数中的data就是一个字符串了
+        // 1.读取data.json文件的数据
         readNewsData((list) => {
+            // 2.
             // 在把新闻添加到list之前，为新闻增加一个 id 属性
             urlObj.query.id = list.length;
-
             // 向数组对象 list 中 push 一条新闻
             list.push(urlObj.query);
 
-            // 2 把用户提交的新闻数据保存到 data.json 文件中
-            // 把 list 数组中的数据写入到 data.json 文件中
-            fs.writeFile(path.join(__dirname, 'data', 'data.json'), JSON.stringify(list), function (err) {
-                if (err) {
-                    throw err;
-                }
-
-                console.log('ok');
-
-                // 设置响应报文头，通过响应报文头告诉浏览器，执行一次页面跳转操作
-                // 3 跳转到新闻列表页
+            // 3.写入data.json文件
+            writeNewsData(JSON.stringify(list), function () {
                 // 重定向
                 res.statusCode = 302;
                 res.statusMessage = 'Found';
