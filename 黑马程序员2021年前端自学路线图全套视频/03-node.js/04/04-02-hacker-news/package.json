@@ -1,0 +1,19 @@
+{
+  "name": "04-02-hacker-news",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mime": "^3.0.1",
+    "@types/node": "^16.11.7"
+  },
+  "dependencies": {
+    "mime": "^3.0.0",
+    "underscore": "^1.13.6"
+  }
+}
