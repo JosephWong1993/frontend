@@ -10,7 +10,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/mime": "^3.0.1",
-    "@types/node": "^16.11.7"
+    "@types/node": "^20.4.9"
   },
   "dependencies": {
     "mime": "^3.0.0",

@@ -7,19 +7,20 @@
 // - req.pathname
 // 3. 为 res 增加一个 render 函数
 
-import url from "url";
-import fs from "fs";
-import _ from 'underscore';
-import mime from "mime";
+const url = require('url');
+const fs = require('fs');
+const mime = require('mime');
+const _ = require('underscore');
 
 // 让当前模块对外暴露一个函数，通过这个函数将 index.js 中的 req 和 res 传递到当前 context.js 这个模块中
-module.exports = function (req, res) {
+module.exports = function (req: any, res: any) {
     const urlObj = url.parse(req.url.toLowerCase(), true);
     // 1. 为 req 增加一个 query 属性
     req.query = urlObj.query;
     // 2. 为 req 增加一个 pathname 属性
     req.pathname = urlObj.pathname;
-
+    // 3. 把请求方法 req.method 转换为小写
+    req.method = req.method.toLowerCase();
     // 3. 为 res 增加一个 render 函数
     res.render = function (filename: string, tplData: any) {
         fs.readFile(filename, function (err, data) {
