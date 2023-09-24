@@ -8,9 +8,11 @@
 // 3. 为 res 增加一个 render 函数
 
 const url = require('url');
-const fs = require('fs');
+import fs from 'fs';
 const mime = require('mime');
 const _ = require('underscore');
+
+console.log('2');
 
 // 让当前模块对外暴露一个函数，通过这个函数将 index.js 中的 req 和 res 传递到当前 context.js 这个模块中
 module.exports = function (req: any, res: any) {

@@ -8,6 +8,8 @@
 // 加载 handler.js模块
 const handler = require('./handler.js');
 
+console.log('3');
+
 module.exports = function (req, res) {
     // 先根据用户请求的路径（路由），将对应的HTML页面显示出来
     if ((req.pathname === '/' || req.pathname === '/index') && req.method === 'get') {

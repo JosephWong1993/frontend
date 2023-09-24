@@ -10,8 +10,18 @@ import * as http from 'http';
 
 const context = require('./context.js');
 const router = require('./router.js');
+
+console.log('1');
+
+let count = 0;
+
 // 2 创建服务
 http.createServer(function (req: any, res: any) {
+    count++;
+    console.log(count);
+
+    console.log('哈哈');
+
     // 调用context.js模块的返回值（函数），并将req和res对象传递给context.js模块的返回值
     context(req, res);
 

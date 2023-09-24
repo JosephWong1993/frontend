@@ -7,9 +7,12 @@
 
 // module.exports = {};
 
-const fs = require('fs');
+import fs from 'fs';
+
 const path = require('path');
 const querystring = require('querystring');
+
+console.log('4');
 
 module.exports = {
     // 处理请求 / 和 /index 的业务方法
