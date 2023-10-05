@@ -11,6 +11,7 @@ import fs from 'fs';
 
 const path = require('path');
 const querystring = require('querystring');
+const config = require('./config.js');
 
 console.log('4');
 
@@ -21,13 +22,13 @@ module.exports = {
         readNewsData(function (list) {
             // 2. 在服务器端使用模板引擎，将 list 中的数据和 index.html 文件中的内容结合，渲染给客户端
             // 读取 index.html 并返回
-            res.render(path.join(__dirname, 'views', 'index.html'), {list: list});
+            res.render(path.join(config.viewPath, 'index.html'), {list: list});
         });
     },
     // 处理请求 /submit 的业务方法
     submit: function (req, res) {
         // 读取 submit.html 并返回
-        res.render(path.join(__dirname, 'views', 'submit.html'));
+        res.render(path.join(config.viewPath, 'submit.html'));
     },
     // 处理请求 /item 的业务方法（显示新闻详情)
     item: function (req, res) {
@@ -49,7 +50,7 @@ module.exports = {
 
             if (model) {
                 // 3.调用 res.render() 函数进行模板引擎的渲染
-                res.render(path.join(__dirname, 'views', 'details.html'), {item: model});
+                res.render(path.join(config.viewPath, 'details.html'), {item: model});
             } else {
                 res.end('No Such Item');
             }
@@ -112,7 +113,7 @@ module.exports = {
 
 // 封装一个读取data.json文件的函数
 function readNewsData(callback: (list: any) => void) {
-    fs.readFile(path.join(__dirname, 'data', 'data.json'), 'utf-8', function (err, data) {
+    fs.readFile(config.dataPath, 'utf-8', function (err, data) {
         if (err && err.code !== 'ENOENT') {
             throw err;
         }
@@ -125,7 +126,7 @@ function readNewsData(callback: (list: any) => void) {
 
 // 封装一个写入data.json文件的函数
 function writeNewsData(data: string, callback: () => void) {
-    fs.writeFile(path.join(__dirname, 'data', 'data.json'), data, function (err) {
+    fs.writeFile(config.dataPath, data, function (err) {
         if (err) {
             throw err;
         }

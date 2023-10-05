@@ -10,6 +10,7 @@ import * as http from 'http';
 
 const context = require('./context.js');
 const router = require('./router.js');
+const config = require('./config.js');
 
 console.log('1');
 
@@ -27,6 +28,6 @@ http.createServer(function (req: any, res: any) {
 
     // 调用 路由模块的返回值（函数），并将req和res对象传递给router.js模块的返回值
     router(req, res);
-}).listen(9090, function () {
-    console.log('http://localhost:9090');
+}).listen(config.port, function () {
+    console.log('http://localhost:' + config.port);
 });
