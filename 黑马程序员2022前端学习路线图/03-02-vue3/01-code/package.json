@@ -1,0 +1,19 @@
+{
+  "type": "commonjs",
+  "name": "01-code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.8.4"
+  },
+  "dependencies": {
+    "then-fs": "^2.0.0"
+  }
+}
