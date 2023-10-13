@@ -1,0 +1,18 @@
+{
+  "type": "commonjs",
+  "name": "02-code",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/node": "^20.8.5",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5"
+  }
+}
