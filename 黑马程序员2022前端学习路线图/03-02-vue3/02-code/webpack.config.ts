@@ -1,7 +1,7 @@
 // const path = require('path');
 import path from 'path';
 // 1. 导入插件，得到构造函数
-import HtmlWebpackPlugin from "html-webpack-plugin";
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 // 2. 创建插件的实例对象
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
     template: './src/index.html',
@@ -17,7 +17,8 @@ module.exports = {
         // 表示输出文件的存放路径
         path: path.join(__dirname, './dist'),
         // 表示输出文件的名称
-        filename: 'bundle.js'
+        filename: 'js/bundle.js',
+        clean: true,
     },
     plugins: [htmlWebpackPlugin], // 3. 挂载插件的实例对象
     devServer: {
@@ -37,6 +38,38 @@ module.exports = {
                 // include: path.resolve(__dirname, 'src'),
                 use: ['style-loader', 'css-loader', 'less-loader'],
             },
+            // {
+            //     test: /\.jpg|png|gif$/,
+            //     use: 'url-loader?limit=22229',
+            // },
+            // {
+            //     test: /\.jpg|png|gif$/,
+            //     use: {
+            //         loader: 'url-loader',
+            //         options: {
+            //             limit: 22228,
+            //             outputPath: 'image'
+            //         },
+            //     },
+            // },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                include: path.resolve(__dirname, 'src'),
+                type: 'asset/resource',
+                generator: {
+                    filename: 'image/[name][contenthash][ext]'
+                },
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        plugins: ['@babel/plugin-proposal-class-properties']
+                    }
+                }
+            }
         ]
     }
-}
+};
