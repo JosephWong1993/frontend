@@ -10,6 +10,7 @@ const htmlWebpackPlugin = new HtmlWebpackPlugin({
 
 module.exports = {
     mode: 'development', // 'production' // 'development', // mode 用来制定构建模式。可选值有 development 和 production
+    devtool: 'nosources-source-map', // 'eval-source-map', // 'nosources-source-map'
     // 指定打包的入口
     entry: path.join(__dirname, './src/index.js'),
     // 指定打包的出口
