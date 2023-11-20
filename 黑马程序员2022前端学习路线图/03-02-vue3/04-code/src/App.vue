@@ -5,8 +5,8 @@
         <hr>
         <p>count值是：{{ count }}</p>
         <button @click="addCount">+1</button>-->
-    <my-swiper></my-swiper>
-    <my-test></my-test>
+    <MySwiper></MySwiper>
+    <MyTest></MyTest>
     <hr/>
     <my-search></my-search>
 </template>
