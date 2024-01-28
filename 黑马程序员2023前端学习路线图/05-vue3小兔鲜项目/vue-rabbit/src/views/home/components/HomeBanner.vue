@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import {getBannerApi} from '@/apis/home.ts';
-import {ref, onMounted} from 'vue';
+import { getBannerApi } from '@/apis/home';
+import { ref, onMounted } from 'vue';
 
-const bannerList = ref([]);
+const bannerList = ref([] as any[]);
 const getBanner = async () => {
-    const res = await getBannerApi();
-    console.log(res);
+    const res = await getBannerApi() as any;
+    // console.log(res);
     bannerList.value = res.result;
 };
 
@@ -13,7 +13,6 @@ onMounted(() => {
     getBanner();
 });
 </script>
-
 
 <template>
     <div class="home-banner">
@@ -28,16 +27,16 @@ onMounted(() => {
 
 <style lang='scss' scoped>
 .home-banner {
-  width: 1240px;
-  height: 500px;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 98;
-
-  img {
-    width: 100%;
+    width: 1240px;
     height: 500px;
-  }
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 98;
+
+    img {
+        width: 100%;
+        height: 500px;
+    }
 }
 </style>
