@@ -1,32 +1,32 @@
 <script lang="ts" setup>
 // vueUse
-import {useScroll} from '@vueuse/core';
+import { useScroll } from '@vueuse/core';
 
-const {y} = useScroll(window);
+const { y } = useScroll(window);
 
 // 使用pinia中的数据
-import {useCategoryStore} from '@/stores/category';
+import { useCategoryStore } from '@/stores/category';
 
 const categoryStore = useCategoryStore();
 </script>
 
 <template>
-    <div :class="{ show: y > 78 }" class="app-header-sticky">
-        <div class="container">
-            <RouterLink class="logo" to="/"/>
-            <!-- 导航区域 -->
-            <ul class="app-header-nav ">
-                <li v-for="item in categoryStore.categoryList" :key="item.id" class="home">
-                    <RouterLink to="/">{{ item.name }}</RouterLink>
-                </li>
-            </ul>
+  <div :class="{ show: y > 78 }" class="app-header-sticky">
+    <div class="container">
+      <RouterLink class="logo" to="/" />
+      <!-- 导航区域 -->
+      <ul class="app-header-nav ">
+        <li v-for="item in categoryStore.categoryList" :key="item.id" class="home">
+          <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
+        </li>
+      </ul>
 
-            <div class="right">
-                <RouterLink to="/">品牌</RouterLink>
-                <RouterLink to="/">专题</RouterLink>
-            </div>
-        </div>
+      <div class="right">
+        <RouterLink to="/">品牌</RouterLink>
+        <RouterLink to="/">专题</RouterLink>
+      </div>
     </div>
+  </div>
 </template>
 
 
