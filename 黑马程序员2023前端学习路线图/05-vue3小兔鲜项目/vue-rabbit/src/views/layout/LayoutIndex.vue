@@ -5,8 +5,8 @@ import LayoutFooter from './components/LayoutFooter.vue';
 import LayoutFixed from './components/LayoutFixed.vue';
 
 // 触发获取导航列表的action
-import {useCategoryStore} from '@/stores/category.ts';
-import {onMounted} from 'vue';
+import { useCategoryStore } from '@/stores/category';
+import { onMounted } from 'vue';
 
 const categoryStore = useCategoryStore();
 onMounted(() => {
@@ -15,9 +15,9 @@ onMounted(() => {
 </script>
 
 <template>
-    <LayoutFixed/>
-    <LayoutNav/>
-    <LayoutHeader/>
-    <RouterView/>
-    <LayoutFooter/>
+    <LayoutFixed />
+    <LayoutNav />
+    <LayoutHeader />
+    <RouterView />
+    <LayoutFooter />
 </template>
