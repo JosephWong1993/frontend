@@ -1,19 +1,28 @@
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, onBeforeRouteUpdate } from 'vue-router';
 import { getTopCategoryApi } from '@/apis/category';
 import { getBannerApi } from '@/apis/home';
+import GoodsItem from '@/views/home/components/GoodsItem.vue'
 
 // 获取数据
 const categoryData = ref({} as any);
 
 const route = useRoute();
-const getTopCategory = async () => {
-    const res = await getTopCategoryApi(route.params.id as string);
+const getTopCategory = async (id: string = route.params.id as string) => {
+    const res = await getTopCategoryApi(id);
     categoryData.value = res.result;
 }
 
 onMounted(() => getTopCategory());
+
+// 目标：路由参数变化的时候 可以吧分类数据接口重新发送
+onBeforeRouteUpdate((to) => {
+    console.log('路由变化了');
+    // 存在问题：使用最新的路由参数请求最新的分类数据
+    console.log(to);
+    getTopCategory(to.params.id as string);
+});
 
 // 获取banner
 const bannerList = ref([] as any[]);
@@ -24,9 +33,7 @@ const getBanner = async () => {
     bannerList.value = res.result;
 };
 
-onMounted(() => {
-    getBanner();
-});
+onMounted(() => getBanner());
 </script>
 
 <template>
@@ -46,6 +53,25 @@ onMounted(() => {
                         <img :src="item.imgUrl" alt="">
                     </el-carousel-item>
                 </el-carousel>
+            </div>
+            <div class="sub-list">
+                <h3>全部分类</h3>
+                <ul>
+                    <li v-for="i in categoryData.children" :key="i.id">
+                        <RouterLink to="/">
+                            <img :src="i.picture" />
+                            <p>{{ i.name }}</p>
+                        </RouterLink>
+                    </li>
+                </ul>
+            </div>
+            <div class="ref-goods" v-for="item in categoryData.children" :key="item.id">
+                <div class="head">
+                    <h3>- {{ item.name }}-</h3>
+                </div>
+                <div class="body">
+                    <GoodsItem v-for="good in item.goods" :good="good" :key="good.id" />
+                </div>
             </div>
         </div>
     </div>
