@@ -8,16 +8,14 @@ const getNewList = async () => {
   const res = await findNewApi() as any;
   newList.value = res.result;
 };
-onMounted(() => {
-  getNewList();
-});
+onMounted(() => getNewList());
 </script>
 
 <template>
   <HomePanel sub-title="新鲜出炉 品质靠谱" title="新鲜好物">
     <ul class="goods-list">
       <li v-for="item in newList" :key="item.id">
-        <RouterLink to="/">
+        <RouterLink :to="`/detail/${item.id}`">
           <img :src="item.picture" alt="" />
           <p class="name">{{ item.name }}</p>
           <p class="price">&yen;{{ item.price }}</p>

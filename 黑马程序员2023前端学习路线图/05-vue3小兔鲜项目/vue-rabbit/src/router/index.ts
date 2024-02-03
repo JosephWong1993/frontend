@@ -7,7 +7,7 @@ import Layout from '@/views/layout/LayoutIndex.vue';
 import Home from '@/views/home/HomeIndex.vue';
 import Category from '@/views/category/CategoryIndex.vue';
 import SubCategory from '@/views/SubCategory/SubCatrgoryIndex.vue'
-
+import Detail from '@/views/Detail/DetailIndex.vue';
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     // path和component对应关系的位置
@@ -27,6 +27,10 @@ const router = createRouter({
                 {
                     path: '/category/sub/:id',
                     component: SubCategory
+                },
+                {
+                    path: '/detail/:id',
+                    component: Detail
                 }
             ]
         },
