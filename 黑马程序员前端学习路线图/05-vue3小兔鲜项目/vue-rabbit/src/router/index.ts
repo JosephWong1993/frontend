@@ -2,7 +2,7 @@
 // createWebHistory：创建history模式的路由
 import { createRouter, createWebHistory } from 'vue-router';
 
-import Login from '@/views/login/index.vue';
+import Login from '@/views/login/LoginIndex.vue';
 import Layout from '@/views/layout/LayoutIndex.vue';
 import Home from '@/views/home/HomeIndex.vue';
 import Category from '@/views/category/CategoryIndex.vue';
