@@ -1,5 +1,15 @@
 <script lang="ts" setup>
-
+import { useUserStore } from '@/stores/user';
+import { useRouter } from 'vue-router'
+const userStore = useUserStore();
+const router = useRouter();
+const confirm = () => {
+  // console.log('用户要退出登录了');
+  // 退出登录业务逻辑实现
+  // 1.清除用户信息，触发action
+  userStore.clearUserInfo();
+  router.push('/login');
+}
 </script>
 
 <template>
@@ -7,10 +17,10 @@
     <div class="container">
       <ul>
         <!-- 多模板渲染 -->
-        <template v-if="false">
-          <li><a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a></li>
+        <template v-if="userStore.userInfo.token">
+          <li><a href="javascript:;"><i class="iconfont icon-user"></i>{{ userStore.userInfo.account }}</a></li>
           <li>
-            <el-popconfirm cancel-button-text="取消" confirm-button-text="确认" title="确认退出吗?">
+            <el-popconfirm @confirm="confirm" cancel-button-text="取消" confirm-button-text="确认" title="确认退出吗?">
               <template #reference>
                 <a href="javascript:;">退出登录</a>
               </template>

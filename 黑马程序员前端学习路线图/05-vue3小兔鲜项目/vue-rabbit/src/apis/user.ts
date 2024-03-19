@@ -8,4 +8,4 @@ export const loginApi = ({ account, password }: { account: string, password: str
             account, password
         }
     })
-}
+};
