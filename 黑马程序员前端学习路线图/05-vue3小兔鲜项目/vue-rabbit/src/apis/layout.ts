@@ -1,7 +1,7 @@
-import httpInstance from '@/utils/http';
+import axiosInstance from '@/utils/http';
 
 export function getCategoryApi() {
-    return httpInstance({
+    return axiosInstance({
         url: '/home/category/head'
     });
 }

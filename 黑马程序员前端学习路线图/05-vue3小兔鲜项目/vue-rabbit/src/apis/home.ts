@@ -1,4 +1,4 @@
-import httpInstance from '@/utils/http';
+import axiosInstance from '@/utils/http';
 
 interface getBannerApiRequestVo {
     distributionSite: string;
@@ -8,7 +8,7 @@ interface getBannerApiRequestVo {
 export function getBannerApi(params: getBannerApiRequestVo = { distributionSite: '1' }) {
     // 默认为1 商品为2
     const { distributionSite = '1' } = params
-    return httpInstance({
+    return axiosInstance({
         url: '/home/banner',
         params: {
             distributionSite
@@ -22,7 +22,7 @@ export function getBannerApi(params: getBannerApiRequestVo = { distributionSite:
  * @return {*}
  */
 export const findNewApi = () => {
-    return httpInstance({
+    return axiosInstance({
         url: '/home/new'
     })
 }
@@ -33,7 +33,7 @@ export const findNewApi = () => {
  * @return {*}
  */
 export const getHotAPI = () => {
-    return httpInstance({
+    return axiosInstance({
         url: 'home/hot',
         method: 'get'
     })
@@ -45,7 +45,7 @@ export const getHotAPI = () => {
  * @return {*}
  */
 export const getGoodsApi = () => {
-    return httpInstance({
+    return axiosInstance({
         url: '/home/goods'
     })
 }

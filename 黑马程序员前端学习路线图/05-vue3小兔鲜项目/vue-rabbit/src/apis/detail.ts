@@ -1,8 +1,8 @@
-import httpInstance from '@/utils/http'
+import axiosInstance from '@/utils/http'
 
 
 export const getDetail = (id: string): any => {
-    return httpInstance({
+    return axiosInstance({
         url: '/goods',
         params: {
             id
@@ -17,7 +17,7 @@ export const getDetail = (id: string): any => {
  * @param {Number} limit - 获取个数
  */
 export const getHotGoodsAPI = ({ id, type, limit = 3 }) => {
-    return httpInstance({
+    return axiosInstance({
         url: '/goods/hot',
         params: {
             id,

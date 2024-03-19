@@ -1,4 +1,4 @@
-import httpInstance from '@/utils/http'
+import axiosInstance from '@/utils/http'
 
 interface getSubCategoryApiRequest {
     categoryId: string,
@@ -13,7 +13,7 @@ interface getSubCategoryApiRequest {
  * @return {*}
  */
 export const getTopCategoryApi = (id: string): any => {
-    return httpInstance({
+    return axiosInstance({
         url: '/category',
         params: {
             id
@@ -27,7 +27,7 @@ export const getTopCategoryApi = (id: string): any => {
  * @return {*}
  */
 export const getCategoryFilterApi = (id: string) => {
-    return httpInstance({
+    return axiosInstance({
         url: '/category/sub/filter',
         params: {
             id
@@ -46,7 +46,7 @@ export const getCategoryFilterApi = (id: string) => {
  * @return {*}
  */
 export const getSubCategoryApi = (data: getSubCategoryApiRequest): any => {
-    return httpInstance({
+    return axiosInstance({
         url: '/category/goods/temporary',
         method: 'POST',
         data
