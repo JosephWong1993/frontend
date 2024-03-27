@@ -10,7 +10,7 @@ export interface CartStoreItem {
     count: number,
     skuId: string,
     attrsText: string,
-    selected: boolean
+    selected: boolean,
 }
 
 export const useCartStore = defineStore('cart', () => {
@@ -32,9 +32,17 @@ export const useCartStore = defineStore('cart', () => {
             cartList.value.push(goods);
         }
     }
+    // 删除购物车
+    const delCart = (skuId: string) => {
+        // 思路：1.找到要删除项的下标值 - splice
+        // 2. 使用数组的过滤方法 - filter
+        const idx = cartList.value.findIndex((item) => item.skuId === skuId);
+        cartList.value.splice(idx, 1);
+    }
     return {
         cartList,
-        addCart
+        addCart,
+        delCart
     }
 }, {
     persist: true
