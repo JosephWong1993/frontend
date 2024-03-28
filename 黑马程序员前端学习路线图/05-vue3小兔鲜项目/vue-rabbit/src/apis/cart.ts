@@ -33,3 +33,12 @@ export const delCartApi = (ids: Array<string>) => {
         }
     })
 }
+
+// 合并购物车
+export const mergeCartApi = (data: Array<{ skuId: string, selected: boolean, count: number }>) => {
+    return axiosInstance({
+        'url': '/member/cart/merge',
+        method: 'POST',
+        data: data
+    })
+}
