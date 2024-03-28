@@ -4,7 +4,7 @@ import { ref } from "vue";
 import { ElMessage } from 'element-plus'
 import 'element-plus/theme-chalk/el-message.css'
 import { useRouter } from 'vue-router'
-import { useUserStore } from "@/stores/user";
+import { useUserStore } from "@/stores/userStore";
 const userStore = useUserStore();
 
 // 1.准备表单对象
@@ -350,4 +350,4 @@ const doLogin = () => {
     width: 100%;
     color: #fff;
 }
-</style>: any: (arg0: Error) => void
+</style>: any: (arg0: Error) => void@/stores/userStore

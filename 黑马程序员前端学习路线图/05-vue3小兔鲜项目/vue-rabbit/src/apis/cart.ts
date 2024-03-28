@@ -14,9 +14,22 @@ export const insertCartApi = ({ skuId, count }) => {
 };
 
 
+// 获取最新的购物车列表
 export const findNewCartListApi = () => {
     return axiosInstance({
         url: '/member/cart',
         method: 'GET'
     })
 };
+
+
+// 删除购物车
+export const delCartApi = (ids: Array<string>) => {
+    return axiosInstance({
+        url: '/member/cart',
+        method: 'DELETE',
+        data: {
+            ids
+        }
+    })
+}

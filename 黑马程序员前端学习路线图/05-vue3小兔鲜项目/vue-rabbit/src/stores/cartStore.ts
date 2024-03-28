@@ -1,8 +1,8 @@
 // 封装购物车模块
 import { defineStore } from 'pinia';
 import { computed, ref } from 'vue';
-import { useUserStore } from './user';
-import { findNewCartListApi, insertCartApi } from '@/apis/cart';
+import { useUserStore } from './userStore';
+import { delCartApi, findNewCartListApi, insertCartApi } from '@/apis/cart';
 
 export interface CartStoreItem {
     id: string
@@ -21,14 +21,19 @@ export const useCartStore = defineStore('cart', () => {
 
     //1. 定义state - cartList
     const cartList = ref<Array<CartStoreItem>>([]);
+    // 获取最新购物车列表action
+    const updateNewList = async () => {
+        const res: any = await findNewCartListApi();
+        cartList.value = res.result;
+    }
+
     //2. 定义action - addCart
     const addCart = async (goods: CartStoreItem) => {
         const { skuId, count } = goods;
         if (isLogin.value) {
             // 登录之后的加入购物车逻辑
             await insertCartApi({ skuId, count });
-            const res: any = await findNewCartListApi();
-            cartList.value = res.result;
+            updateNewList();
         } else {
             // 添加购物车操作
             // 已添加过 - count+1
@@ -44,12 +49,24 @@ export const useCartStore = defineStore('cart', () => {
             }
         }
     }
+
     // 删除购物车
-    const delCart = (skuId: string) => {
-        // 思路：1.找到要删除项的下标值 - splice
-        // 2. 使用数组的过滤方法 - filter
-        const idx = cartList.value.findIndex((item) => item.skuId === skuId);
-        cartList.value.splice(idx, 1);
+    const delCart = async (skuId: string) => {
+        if (isLogin.value) {
+            // 调用接口实现接口购物车中的删除功能
+            await delCartApi([skuId])
+            updateNewList();
+        } else {
+            // 思路：1.找到要删除项的下标值 - splice
+            // 2. 使用数组的过滤方法 - filter
+            const idx = cartList.value.findIndex((item) => item.skuId === skuId);
+            cartList.value.splice(idx, 1);
+        }
+    }
+
+    // 清楚购物车
+    const clearCart = async () => {
+        cartList.value = [];
     }
 
     // 单选功能
@@ -93,6 +110,7 @@ export const useCartStore = defineStore('cart', () => {
         delCart,
         singleCheck,
         allCheck,
+        clearCart,
     }
 }, {
     persist: true

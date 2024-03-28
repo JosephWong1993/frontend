@@ -1,6 +1,7 @@
 <script lang="ts" setup>
-import { useUserStore } from '@/stores/user';
 import { useRouter } from 'vue-router'
+import { ElPopconfirm } from 'element-plus'
+import { useUserStore } from '@/stores/userStore';
 const userStore = useUserStore();
 const router = useRouter();
 const confirm = () => {
@@ -75,4 +76,4 @@ const confirm = () => {
     }
   }
 }
-</style>
+</style>@/stores/userStore
