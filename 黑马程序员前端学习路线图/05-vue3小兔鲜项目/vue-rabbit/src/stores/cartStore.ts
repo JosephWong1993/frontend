@@ -15,7 +15,7 @@ export interface CartStoreItem {
 
 export const useCartStore = defineStore('cart', () => {
     //1. 定义state - cartList
-    const cartList = ref(new Array<CartStoreItem>);
+    const cartList = ref<Array<CartStoreItem>>([]);
     //2. 定义action - addCart
     const addCart = (goods: CartStoreItem) => {
         // console.log('添加', goods);
@@ -40,17 +40,35 @@ export const useCartStore = defineStore('cart', () => {
         cartList.value.splice(idx, 1);
     }
 
+    // 单选功能
+    const singleCheck = (skuId: string, selected: boolean) => {
+        // 通过skuId找到要修改的那一项，然后把它的selected修改为传过来的selected
+        const item = cartList.value.find((item) => item.skuId === skuId);
+        item.selected = selected;
+    }
+
+    // 全选功能
+    const allCheck = (selected: boolean) => {
+        // 把cartList中的每一项的selected都设置为当前的全选框状态
+        cartList.value.forEach(item => item.selected = selected);
+    }
+
     // 计算属性
     // 1. 总的数量 所有项的count之和
     const allCount = computed(() => cartList.value.reduce((a, c) => a + c.count, 0));
     // 2. 总计 所有项的count*price之和
     const allPrice = computed(() => cartList.value.reduce((a, c) => a + c.count * c.price, 0));
+    // 是否全选
+    const isAll = computed(() => cartList.value.every(item => item.selected));
     return {
         cartList,
         addCart,
         delCart,
+        singleCheck,
+        allCheck,
         allCount,
-        allPrice
+        allPrice,
+        isAll
     }
 }, {
     persist: true
