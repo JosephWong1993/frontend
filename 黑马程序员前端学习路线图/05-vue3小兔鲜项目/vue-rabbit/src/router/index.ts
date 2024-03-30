@@ -11,6 +11,7 @@ import Detail from '@/views/Detail/DetailIndex.vue';
 import CartList from '@/views/cartList/CartListIndex.vue';
 import Checkout from '@/views/checkout/CheckoutIndex.vue';
 import Pay from '@/views/pay/PayIndex.vue';
+import PayBack from '@/views/pay/PayBack.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,7 +45,10 @@ const router = createRouter({
                 }, {
                     path: 'pay',
                     component: Pay
-                }
+                }, {
+                    path: 'paycallback', // 注意路径，必须是paycallback
+                    component: PayBack
+                },
             ]
         },
         {

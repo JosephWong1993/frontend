@@ -76,9 +76,9 @@ export const createOrderApi = (data: CreateOrderRequestVo) => {
         url: '/member/order',
         method: 'POST',
         data
-    }) as unknown as {
+    }) as unknown as Promise<{
         code: string,
         msg: string,
         result: createOrderResponseVo
-    };
+    }>;
 }
